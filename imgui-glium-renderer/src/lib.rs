@@ -99,7 +99,7 @@ impl Renderer {
         let matrix = [[2.0 / width as f32, 0.0, 0.0, 0.0],
                       [0.0, 2.0 / -(height as f32), 0.0, 0.0],
                       [0.0, 0.0, -1.0, 0.0],
-                      [-1.0, 1.0, 0.0, 1.0]];
+                      [-1.0, 2.0 / scale_height - 1.0, 0.0, 1.0]];
         let font_texture_id = self.device_objects.texture.get_id() as usize;
 
         let mut idx_start = 0;
@@ -124,7 +124,7 @@ impl Renderer {
                                   blend: Blend::alpha_blending(),
                                   scissor: Some(Rect {
                                       left: (cmd.clip_rect.x * scale_width) as u32,
-                                      bottom: ((height - cmd.clip_rect.w) * scale_height) as u32,
+                                      bottom:(height - (cmd.clip_rect.w * scale_height)) as u32,
                                       width: ((cmd.clip_rect.z - cmd.clip_rect.x) * scale_width) as
                                              u32,
                                       height: ((cmd.clip_rect.w - cmd.clip_rect.y) *
